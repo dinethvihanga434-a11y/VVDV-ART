@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Art Gallery & Custom Framing</title>
+    <title>Art Gallery & Custom Framing | Sri Lanka</title>
     
     <meta name="google-site-verification" content="I4lKHzztWYLS_QRBX88u7tt3kPVWIfar0kb58nKesBg" />
 
@@ -14,16 +14,17 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
+            background-color: #fcfcfc;
+            color: #1a1a1a;
         }
 
         .art-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .art-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
         }
 
         .modal {
@@ -34,7 +35,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.95);
+            background-color: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -42,9 +44,10 @@
 
         .modal-content {
             max-width: 95%;
-            max-height: 90%;
+            max-height: 90vh;
             object-fit: contain;
-            border-radius: 4px;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
         .whatsapp-btn {
@@ -54,14 +57,15 @@
 
         .whatsapp-btn:hover {
             background-color: #128c7e;
+            transform: scale(1.02);
         }
 
         .delivery-banner {
-            background: linear-gradient(90deg, #b45309 0%, #d97706 100%);
+            background: linear-gradient(90deg, #92400e 0%, #d97706 100%);
         }
 
         .image-placeholder {
-            background: #e5e7eb;
+            background: #f3f4f6;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -74,88 +78,144 @@
             position: absolute;
             top: 0; right: 0; bottom: 0; left: 0;
             transform: translateX(-100%);
-            background: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
-            animation: shimmer 1.5s infinite;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+            animation: shimmer 2s infinite;
         }
 
         @keyframes shimmer {
             100% { transform: translateX(100%); }
         }
 
-        .img-fade-in {
-            animation: fadeIn 0.4s ease-in forwards;
-            opacity: 0;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .size-select {
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d97706' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
-            background-position: right 0.5rem center;
+            background-position: right 0.75rem center;
             background-size: 1em;
         }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
+    <!-- Top Promo Banner -->
     <div class="delivery-banner text-white py-2 px-4 text-center text-xs sm:text-sm font-bold sticky top-0 z-[60] shadow-md">
-        <i class="fas fa-truck-moving mr-2"></i> ලංකාවේ ඕනෑම තැනකට නොමිලේ ප්‍රවාහනය (Free Delivery)!
+        <span class="inline-flex items-center">
+            <i class="fas fa-truck-moving mr-2 animate-bounce"></i> 
+            ලංකාවේ ඕනෑම තැනකට නොමිලේ ප්‍රවාහනය (FREE DELIVERY)!
+        </span>
     </div>
 
-    <header class="bg-white shadow-sm sticky top-[36px] z-50">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-xl sm:text-2xl font-bold text-gray-800 tracking-tight">ART <span class="text-amber-600">GALLERY</span></h1>
-            <a href="tel:0721075641" class="text-gray-600 font-bold flex items-center text-sm sm:text-base">
-                <i class="fas fa-phone-alt mr-2 text-amber-600"></i> 0721075641
-            </a>
+    <!-- Sticky Header -->
+    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-[32px] sm:top-[36px] z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-amber-600 rounded flex items-center justify-center text-white">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h1 class="text-xl sm:text-2xl font-bold text-gray-800 tracking-tight">ART <span class="text-amber-600 uppercase">Gallery</span></h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="tel:0721075641" class="hidden sm:flex items-center text-gray-600 font-semibold hover:text-amber-600 transition">
+                    <i class="fas fa-phone-alt mr-2 text-amber-600"></i> 0721075641
+                </a>
+                <a href="https://wa.me/94721075641" class="whatsapp-btn text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center">
+                    <i class="fab fa-whatsapp mr-2 text-lg"></i> Chat
+                </a>
+            </div>
         </div>
     </header>
 
-    <section class="bg-amber-50 py-10 sm:py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">ඔබේ නිවසට සුන්දරත්වයක් එක් කරන්න</h2>
-            <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-8">රාමු කළ පින්තූර සහ කලා නිර්මාණ - කිසිදු අමතර ප්‍රවාහන ගාස්තුවක් අය නොකෙරේ.</p>
-            <div class="inline-flex items-center bg-white border-2 border-amber-200 px-6 py-3 rounded-full text-amber-800 font-bold shadow-sm">
-                <i class="fas fa-shipping-fast mr-2 text-green-600"></i> 100% Free Delivery
+    <!-- Hero / Intro -->
+    <section class="relative bg-white overflow-hidden border-b">
+        <div class="absolute inset-0 bg-amber-50/50 opacity-50"></div>
+        <div class="container mx-auto px-4 py-12 sm:py-20 relative z-10 text-center">
+            <h2 class="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+                ඔබේ නිවසට <span class="text-amber-600">සුන්දරත්වයක්</span> එක් කරන්න
+            </h2>
+            <p class="text-base sm:text-xl text-gray-600 max-w-2xl mx-auto mb-10">
+                උසස් ප්‍රමිතියෙන් යුත් රාමු කළ පින්තූර සහ කලා නිර්මාණ. ඔබේ ආදරණීය මතකයන් අප ලවා රාමු කරගන්න.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="flex items-center bg-white px-6 py-3 rounded-2xl shadow-sm border border-amber-100">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    <span class="font-bold text-gray-700">Premium Quality</span>
+                </div>
+                <div class="flex items-center bg-white px-6 py-3 rounded-2xl shadow-sm border border-amber-100">
+                    <i class="fas fa-shipping-fast text-amber-600 mr-2"></i>
+                    <span class="font-bold text-gray-700">Free Delivery</span>
+                </div>
             </div>
         </div>
     </section>
 
-    <main class="container mx-auto px-4 py-12 pb-24">
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        
+        <!-- Section Title -->
+        <div class="flex items-center justify-between mb-10">
+            <h2 class="text-2xl font-extrabold text-gray-900 flex items-center">
+                <span class="w-8 h-1 bg-amber-600 mr-3 rounded"></span>
+                අපගේ එකතුව (Our Collection)
+            </h2>
+        </div>
+
+        <!-- Gallery Grid -->
         <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             <!-- Items Injected by JS -->
         </div>
     </main>
 
+    <!-- Image Modal -->
     <div id="artModal" class="modal" onclick="closeModal()">
-        <button class="absolute top-5 right-5 text-white text-4xl hover:text-amber-500 transition">&times;</button>
-        <img class="modal-content shadow-2xl" id="modalImg" onclick="event.stopPropagation()">
+        <button class="absolute top-5 right-5 text-white text-4xl hover:text-amber-500 transition focus:outline-none">&times;</button>
+        <div class="flex flex-col items-center">
+            <img class="modal-content" id="modalImg" onclick="event.stopPropagation()">
+            <p id="modalCaption" class="text-white mt-4 font-bold text-lg"></p>
+        </div>
     </div>
 
-    <footer class="bg-gray-900 text-white py-16 text-center">
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-white pt-20 pb-10">
         <div class="container mx-auto px-4">
-            <p class="mb-8 text-gray-400 font-medium italic">"කලාවෙන් ඔබේ ලොව හැඩ කරන්න"</p>
-            <div class="flex justify-center space-x-10 mb-10">
-                <a href="tel:0721075641" class="text-4xl hover:text-amber-500 transition transform hover:scale-110"><i class="fas fa-phone"></i></a>
-                <a href="https://wa.me/94721075641" class="text-4xl hover:text-green-500 transition transform hover:scale-110"><i class="fab fa-whatsapp"></i></a>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                <div>
+                    <h4 class="text-xl font-bold mb-6 flex items-center">
+                        <span class="text-amber-600 mr-2">ART</span> GALLERY
+                    </h4>
+                    <p class="text-gray-400 leading-relaxed italic mb-6">
+                        "අපගේ අරමුණ වන්නේ සෑම නිවසක්ම අලංකාර සහ අර්ථාන්විත කලා නිර්මාණයකින් හැඩ කිරීමයි."
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#" class="hover:text-amber-500 transition">මුල් පිටුව</a></li>
+                        <li><a href="tel:0721075641" class="hover:text-amber-500 transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Customer Service</h4>
+                    <p class="text-amber-600 font-bold text-xl mb-4">0721075641</p>
+                    <div class="flex space-x-6">
+                        <a href="tel:0721075641" class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-amber-600 transition">
+                            <i class="fas fa-phone-alt"></i>
+                        </a>
+                        <a href="https://wa.me/94721075641" class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center hover:bg-green-600 transition">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <p class="text-amber-600 font-bold mb-2">සම්බන්ධ කරගන්න: 0721075641</p>
-            <p class="text-xs text-gray-600 mt-6 tracking-widest uppercase">© 2024 Art Gallery Sri Lanka</p>
+            <div class="border-t border-white/10 pt-10 text-center">
+                <p class="text-sm text-gray-500 tracking-widest uppercase">© 2025 Art Gallery Sri Lanka - All Rights Reserved</p>
+            </div>
         </div>
     </footer>
 
     <script>
         const artData = [
-            // Updated New Items
-            { type: 'unframed', title: 'Golden Floral Art', basePrice: 500, img: 'https://i.ibb.co/RpDXPGHx/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post-5.png' },
-            { type: 'framed', title: 'Modern Abstract Portrait', basePrice: 1500, img: 'https://i.ibb.co/8C9kXJL/Universal-Upscaler-b6a66be2-06da-4d82-8556-d62216fcead3.jpg' },
-            
-            // Previous Items
+            { type: 'unframed', title: 'Golden Floral Art', basePrice: 1500, img: 'https://i.ibb.co/RpDXPGHx/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post-5.png' },
+            { type: 'framed', title: 'Modern Abstract Portrait', basePrice: 500, img: 'https://i.ibb.co/8C9kXJL/Universal-Upscaler-b6a66be2-06da-4d82-8556-d62216fcead3.jpg' },
             { type: 'framed', title: 'Elephant Frame Art', basePrice: 1500, img: 'https://i.ibb.co/xSnpG0hT/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post-1.png' },
             { type: 'framed', title: 'Nature Frame Art', basePrice: 1500, img: 'https://i.ibb.co/s8V0dTq/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post-2.png' },
             { type: 'framed', title: 'Traditional Frame', basePrice: 1500, img: 'https://i.ibb.co/7dGYbqQj/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post-3.png' },
@@ -193,7 +253,7 @@
             const sizeLabel = sizeOptions.find(s => s.id === sizeId).label;
             const finalPrice = getPrice(item.basePrice, sizeId);
 
-            priceTag.innerText = `Rs. ${finalPrice}`;
+            priceTag.innerText = `Rs. ${finalPrice.toLocaleString()}`;
             
             const msg = `හලෝ, මම මෙම පින්තූරය ඇණවුම් කිරීමට කැමතියි:\n\nනම: ${item.title}\nප්‍රමාණය: ${sizeLabel}\nමිල: Rs. ${finalPrice}\n\nමට වැඩි විස්තර ලබා දෙන්න.`;
             waBtn.href = `https://wa.me/94721075641?text=${encodeURIComponent(msg)}`;
@@ -207,41 +267,47 @@
                 const defaultMsg = `හලෝ, මම මෙම පින්තූරය ඇණවුම් කිරීමට කැමතියි:\n\nනම: ${item.title}\nප්‍රමාණය: A4 Size\nමිල: Rs. ${defaultPrice}`;
 
                 return `
-                <div class="art-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
-                    <div id="container-${index}" class="relative h-72 overflow-hidden image-placeholder cursor-pointer" onclick="openModal('${item.img}')">
+                <div class="art-card bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+                    <div id="container-${index}" class="relative h-72 overflow-hidden image-placeholder group cursor-zoom-in" onclick="openModal('${item.img}', '${item.title}')">
                         <img 
                             src="${item.img}" 
                             alt="${item.title}" 
-                            class="w-full h-full object-cover opacity-0 img-fade-in" 
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-0" 
                             onload="onLoaded(${index})"
                             onerror="onError(${index})"
                         >
-                        <div class="absolute top-3 left-3 bg-green-600 text-white text-[10px] px-3 py-1 rounded-full font-bold shadow-sm z-10 uppercase tracking-tighter">නොමිලේ ප්‍රවාහනය</div>
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur text-amber-800 text-[10px] px-3 py-1.5 rounded-full font-bold shadow-sm z-10 uppercase tracking-wider">
+                            <i class="fas fa-truck mr-1"></i> Free Delivery
+                        </div>
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <i class="fas fa-search-plus text-white text-3xl"></i>
+                        </div>
                     </div>
                     
-                    <div class="p-5 flex-grow flex flex-col">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-bold text-gray-800 text-base leading-tight">${item.title}</h3>
-                            <div class="bg-amber-50 px-2 py-1 rounded shrink-0">
-                                <span id="price-${index}" class="text-amber-700 font-extrabold text-sm">Rs. ${defaultPrice}</span>
-                            </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <div class="mb-4">
+                            <h3 class="font-bold text-gray-800 text-lg leading-tight mb-1">${item.title}</h3>
+                            <p class="text-amber-600 text-xs font-bold uppercase tracking-widest">
+                                ${item.type === 'framed' ? '<i class="fas fa-border-all mr-1"></i> Framed Design' : '<i class="far fa-file-image mr-1"></i> Art Paper Print'}
+                            </p>
                         </div>
-                        
-                        <p class="text-gray-500 text-[10px] font-medium uppercase tracking-wider mb-4">
-                            ${item.type === 'framed' ? '<i class="fas fa-border-all mr-1"></i> රාමු කරන ලද නිර්මාණය' : '<i class="far fa-file-image mr-1"></i> Art Paper මුද්‍රණය'}
-                        </p>
 
-                        <div class="mb-5">
-                            <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">ප්‍රමාණය තෝරන්න (Select Size):</label>
-                            <select id="size-${index}" onchange="updateItem(${index})" class="size-select w-full bg-gray-50 border border-gray-200 text-gray-700 py-2 px-3 rounded-lg text-xs focus:outline-none focus:border-amber-500 transition">
+                        <div class="mb-6">
+                            <label class="block text-[10px] font-bold text-gray-400 uppercase mb-2">Select Size</label>
+                            <select id="size-${index}" onchange="updateItem(${index})" class="size-select w-full bg-gray-50 border border-gray-200 text-gray-700 py-3 px-4 rounded-xl text-sm font-semibold focus:outline-none focus:border-amber-500 transition">
                                 ${sizeOptions.map(s => `<option value="${s.id}" ${s.id === 'A4' ? 'selected' : ''}>${s.label}</option>`).join('')}
                             </select>
+                        </div>
+
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-gray-400 text-sm">Total Price:</span>
+                            <span id="price-${index}" class="text-2xl font-black text-gray-900">Rs. ${defaultPrice.toLocaleString()}</span>
                         </div>
 
                         <a id="wa-${index}" 
                            href="https://wa.me/94721075641?text=${encodeURIComponent(defaultMsg)}" 
                            target="_blank"
-                           class="whatsapp-btn w-full text-center py-3 rounded-xl text-white font-bold text-sm shadow-md flex items-center justify-center mt-auto">
+                           class="whatsapp-btn w-full text-center py-4 rounded-2xl text-white font-bold text-sm shadow-lg flex items-center justify-center mt-auto">
                             <i class="fab fa-whatsapp mr-2 text-xl"></i> ඇණවුම් කරන්න
                         </a>
                     </div>
@@ -253,7 +319,9 @@
             const container = document.getElementById(`container-${index}`);
             if (container) {
                 container.classList.remove('image-placeholder');
-                container.querySelector('img').style.opacity = '1';
+                const img = container.querySelector('img');
+                img.style.opacity = '1';
+                img.classList.add('transition-opacity', 'duration-500');
             }
         }
 
@@ -261,13 +329,17 @@
             const container = document.getElementById(`container-${index}`);
             if (container) {
                 container.classList.remove('image-placeholder');
-                container.innerHTML = `<div class="flex items-center justify-center h-full text-gray-400 italic text-xs">පින්තූරය පූරණය කළ නොහැක</div>`;
+                container.innerHTML = `<div class="flex flex-col items-center justify-center h-full text-gray-400 italic text-xs p-4 text-center">
+                    <i class="fas fa-image-slash text-2xl mb-2"></i>
+                    <p>Image could not be loaded</p>
+                </div>`;
             }
         }
 
-        function openModal(src) {
+        function openModal(src, title) {
             const modal = document.getElementById('artModal');
             document.getElementById('modalImg').src = src;
+            document.getElementById('modalCaption').innerText = title;
             modal.style.display = "flex";
             document.body.style.overflow = 'hidden';
         }
