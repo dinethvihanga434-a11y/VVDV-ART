@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Gallery & Custom Framing</title>
+    
+    <meta name="google-site-verification" content="I4lKHzztWYLS_QRBX88u7tt3kPVWIfar0kb58nKesBg" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .art-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .art-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            max-width: 95%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .whatsapp-btn {
+            background-color: #25d366;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128c7e;
+        }
+
+        .delivery-banner {
+            background: linear-gradient(90deg, #b45309 0%, #d97706 100%);
+        }
+
+        .image-placeholder {
+            background: #e5e7eb;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-placeholder::after {
+            content: "";
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            transform: translateX(-100%);
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+
+        .img-fade-in {
+            animation: fadeIn 0.4s ease-in forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .size-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="delivery-banner text-white py-2 px-4 text-center text-xs sm:text-sm font-bold sticky top-0 z-[60] shadow-md">
+        <i class="fas fa-truck-moving mr-2"></i> ලංකාවේ ඕනෑම තැනකට නොමිලේ ප්‍රවාහනය (Free Delivery)!
+    </div>
+
+    <header class="bg-white shadow-sm sticky top-[36px] z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-800 tracking-tight">ART <span class="text-amber-600">GALLERY</span></h1>
+            <a href="tel:0721075641" class="text-gray-600 font-bold flex items-center text-sm sm:text-base">
+                <i class="fas fa-phone-alt mr-2 text-amber-600"></i> 0721075641
+            </a>
+        </div>
+    </header>
+
+    <section class="bg-amber-50 py-10 sm:py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">ඔබේ නිවසට සුන්දරත්වයක් එක් කරන්න</h2>
+            <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto mb-8">රාමු කළ පින්තූර සහ කලා නිර්මාණ - කිසිදු අමතර ප්‍රවාහන ගාස්තුවක් අය නොකෙරේ.</p>
+            <div class="inline-flex items-center bg-white border-2 border-amber-200 px-6 py-3 rounded-full text-amber-800 font-bold shadow-sm">
+                <i class="fas fa-shipping-fast mr-2 text-green-600"></i> 100% Free Delivery
+            </div>
+        </div>
+    </section>
+
+    <main class="container mx-auto px-4 py-12 pb-24">
+        <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Items Injected by JS -->
+        </div>
+    </main>
+
+    <div id="artModal" class="modal" onclick="closeModal()">
+        <button class="absolute top-5 right-5 text-white text-4xl hover:text-amber-500 transition">&times;</button>
+        <img class="modal-content shadow-2xl" id="modalImg" onclick="event.stopPropagation()">
+    </div>
+
+    <footer class="bg-gray-900 text-white py-16 text-center">
+        <div class="container mx-auto px-4">
+            <p class="mb-8 text-gray-400 font-medium italic">"කලාවෙන් ඔබේ ලොව හැඩ කරන්න"</p>
+            <div class="flex justify-center space-x-10 mb-10">
+                <a href="tel:0721075641" class="text-4xl hover:text-amber-500 transition transform hover:scale-110"><i class="fas fa-phone"></i></a>
+                <a href="https://wa.me/94721075641" class="text-4xl hover:text-green-500 transition transform hover:scale-110"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="text-amber-600 font-bold mb-2">සම්බන්ධ කරගන්න: 0721075641</p>
+            <p class="text-xs text-gray-600 mt-6 tracking-widest uppercase">© 2024 Art Gallery Sri Lanka</p>
+        </div>
+    </footer>
+
+    <script>
+        const artData = [
+            // Updated New Items
+            { type: 'unframed', title: 'Golden Floral Art', basePrice: 500, img: 'https://i.ibb.co/RpDXPGHx/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post-5.png' },
+            { type: 'framed', title: 'Modern Abstract Portrait', basePrice: 1500, img: 'https://i.ibb.co/8C9kXJL/Universal-Upscaler-b6a66be2-06da-4d82-8556-d62216fcead3.jpg' },
+            
+            // Previous Items
+            { type: 'framed', title: 'Elephant Frame Art', basePrice: 1500, img: 'https://i.ibb.co/xSnpG0hT/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post-1.png' },
+            { type: 'framed', title: 'Nature Frame Art', basePrice: 1500, img: 'https://i.ibb.co/s8V0dTq/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post-2.png' },
+            { type: 'framed', title: 'Traditional Frame', basePrice: 1500, img: 'https://i.ibb.co/7dGYbqQj/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post-3.png' },
+            { type: 'framed', title: 'Classic Art Frame', basePrice: 1500, img: 'https://i.ibb.co/6RZ2C4GK/Brown-Green-Photo-Frame-Display-Mockup-Instagram-Post.png' },
+            { type: 'framed', title: 'Modern Elephant Art', basePrice: 1500, img: 'https://i.ibb.co/yn8djKHT/Gemini-Generated-Image-wevp36wevp36wevp-1.png' },
+            { type: 'framed', title: 'Modern Art Print', basePrice: 1500, img: 'https://i.ibb.co/VWS6tJCk/Gemini-Generated-Image-kqsudvkqsudvkqsu.png' },
+            { type: 'framed', title: 'Abstract Art Print', basePrice: 1500, img: 'https://i.ibb.co/3yQXRvCn/Gemini-Generated-Image-ynejvaynejvaynej.jpg' },
+            { type: 'unframed', title: 'Zen Garden Print', basePrice: 500, img: 'https://i.ibb.co/G3VDSHwr/gpt-image-1-A-minimalist-Zen-garden-with-perfectly-raked-white-sand-patterns-a-single-weathe-0.jpg' },
+            { type: 'unframed', title: 'Minimalist Line Art', basePrice: 500, img: 'https://i.ibb.co/zhm1gXx7/Pix-Verse-Image-Effect-prompt-Minimalist-line-a.jpg' },
+            { type: 'unframed', title: 'Premium Art Print 1', basePrice: 500, img: 'https://i.ibb.co/KxyBXGyX/Universal-Upscaler-7fda78b6-f957-4b2a-bb58-7b08e732fce3.jpg' },
+            { type: 'unframed', title: 'Premium Art Print 2', basePrice: 500, img: 'https://i.ibb.co/kVn5NjDZ/Universal-Upscaler-33a96f90-9c03-43f5-af62-01c275134fe2.jpg' },
+            { type: 'unframed', title: 'Special Art Collection', basePrice: 500, img: 'https://i.ibb.co/JRCBfzzF/upload-ca62abc484175e98228a15e6fed34d39-1.png' }
+        ];
+
+        const sizeOptions = [
+            { id: '4x6', label: '4 x 6 in (Small)', multiplier: 0.6 },
+            { id: '6x8', label: '6 x 8 in (Mini)', multiplier: 0.8 },
+            { id: 'A4', label: 'A4 Size (8.3 x 11.7 in)', multiplier: 1 },
+            { id: 'A3', label: 'A3 Size (11.7 x 16.5 in)', multiplier: 2 },
+            { id: 'A2', label: 'A2 Size (16.5 x 23.4 in)', multiplier: 4 } 
+        ];
+
+        function getPrice(basePrice, sizeId) {
+            const size = sizeOptions.find(s => s.id === sizeId);
+            return Math.round(basePrice * size.multiplier);
+        }
+
+        function updateItem(index) {
+            const sizeSelect = document.getElementById(`size-${index}`);
+            const priceTag = document.getElementById(`price-${index}`);
+            const waBtn = document.getElementById(`wa-${index}`);
+            
+            const item = artData[index];
+            const sizeId = sizeSelect.value;
+            const sizeLabel = sizeOptions.find(s => s.id === sizeId).label;
+            const finalPrice = getPrice(item.basePrice, sizeId);
+
+            priceTag.innerText = `Rs. ${finalPrice}`;
+            
+            const msg = `හලෝ, මම මෙම පින්තූරය ඇණවුම් කිරීමට කැමතියි:\n\nනම: ${item.title}\nප්‍රමාණය: ${sizeLabel}\nමිල: Rs. ${finalPrice}\n\nමට වැඩි විස්තර ලබා දෙන්න.`;
+            waBtn.href = `https://wa.me/94721075641?text=${encodeURIComponent(msg)}`;
+        }
+
+        function displayArt() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = artData.map((item, index) => {
+                const defaultSize = 'A4';
+                const defaultPrice = getPrice(item.basePrice, defaultSize);
+                const defaultMsg = `හලෝ, මම මෙම පින්තූරය ඇණවුම් කිරීමට කැමතියි:\n\nනම: ${item.title}\nප්‍රමාණය: A4 Size\nමිල: Rs. ${defaultPrice}`;
+
+                return `
+                <div class="art-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+                    <div id="container-${index}" class="relative h-72 overflow-hidden image-placeholder cursor-pointer" onclick="openModal('${item.img}')">
+                        <img 
+                            src="${item.img}" 
+                            alt="${item.title}" 
+                            class="w-full h-full object-cover opacity-0 img-fade-in" 
+                            onload="onLoaded(${index})"
+                            onerror="onError(${index})"
+                        >
+                        <div class="absolute top-3 left-3 bg-green-600 text-white text-[10px] px-3 py-1 rounded-full font-bold shadow-sm z-10 uppercase tracking-tighter">නොමිලේ ප්‍රවාහනය</div>
+                    </div>
+                    
+                    <div class="p-5 flex-grow flex flex-col">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-800 text-base leading-tight">${item.title}</h3>
+                            <div class="bg-amber-50 px-2 py-1 rounded shrink-0">
+                                <span id="price-${index}" class="text-amber-700 font-extrabold text-sm">Rs. ${defaultPrice}</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-500 text-[10px] font-medium uppercase tracking-wider mb-4">
+                            ${item.type === 'framed' ? '<i class="fas fa-border-all mr-1"></i> රාමු කරන ලද නිර්මාණය' : '<i class="far fa-file-image mr-1"></i> Art Paper මුද්‍රණය'}
+                        </p>
+
+                        <div class="mb-5">
+                            <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">ප්‍රමාණය තෝරන්න (Select Size):</label>
+                            <select id="size-${index}" onchange="updateItem(${index})" class="size-select w-full bg-gray-50 border border-gray-200 text-gray-700 py-2 px-3 rounded-lg text-xs focus:outline-none focus:border-amber-500 transition">
+                                ${sizeOptions.map(s => `<option value="${s.id}" ${s.id === 'A4' ? 'selected' : ''}>${s.label}</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <a id="wa-${index}" 
+                           href="https://wa.me/94721075641?text=${encodeURIComponent(defaultMsg)}" 
+                           target="_blank"
+                           class="whatsapp-btn w-full text-center py-3 rounded-xl text-white font-bold text-sm shadow-md flex items-center justify-center mt-auto">
+                            <i class="fab fa-whatsapp mr-2 text-xl"></i> ඇණවුම් කරන්න
+                        </a>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function onLoaded(index) {
+            const container = document.getElementById(`container-${index}`);
+            if (container) {
+                container.classList.remove('image-placeholder');
+                container.querySelector('img').style.opacity = '1';
+            }
+        }
+
+        function onError(index) {
+            const container = document.getElementById(`container-${index}`);
+            if (container) {
+                container.classList.remove('image-placeholder');
+                container.innerHTML = `<div class="flex items-center justify-center h-full text-gray-400 italic text-xs">පින්තූරය පූරණය කළ නොහැක</div>`;
+            }
+        }
+
+        function openModal(src) {
+            const modal = document.getElementById('artModal');
+            document.getElementById('modalImg').src = src;
+            modal.style.display = "flex";
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('artModal').style.display = "none";
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onload = displayArt;
+    </script>
+</body>
+</html>
